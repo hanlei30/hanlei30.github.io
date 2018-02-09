@@ -1,1 +1,1231 @@
-Hello
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="fragment" content="!">
+    <!-- OG tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Learn Anything">
+    <meta property="og:description" content="Search Interactive Mind Maps to learn anything">
+    <meta property="og:url" content="https://learn-anything.xyz/learn-anything">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>learn anything - Learn Anything</title>
+    <link rel="icon" href="./imgs/favicon.ico">
+    <link href="./css/raleway.css" rel="stylesheet">
+    <!-- Temporary styling to avoid FOUC -->
+    <style>
+    body {
+        background: white;
+        padding-top: 20px;
+    }
+    </style>
+    <style type="text/css">
+    .bm-menu-wrap {
+        z-index: 3 !important;
+    }
+
+    .sidebar-menu-block {
+        margin-bottom: 20px;
+    }
+
+    .sidebar-menu-item {
+        cursor: pointer;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .sidebar-menu-options {
+        font-size: 1rem;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .sidebar-menu-options ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar-menu-options div,
+    .sidebar-menu-options li {
+        border-bottom: 1px solid #424242;
+        color: #e0e0e0;
+        cursor: default;
+        padding: 10px;
+        padding-left: 20px;
+        transition: background-color .218s;
+    }
+
+    .sidebar-menu-options div:not([disabled]) {
+        cursor: pointer;
+    }
+
+    .sidebar-menu-options div:not([disabled]):hover {
+        background-color: #424242;
+    }
+
+    .sidebar-menu-options div:last-child,
+    .sidebar-menu-options li:last-child {
+        border-bottom: 0;
+    }
+
+    .sidebar-menu-options--visible {
+        height: initial;
+    }
+
+    .bm-burger-button {
+        height: 30px;
+        margin: 25px 30px;
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 36px;
+    }
+
+    .bm-burger-bars {
+        border-radius: 2px;
+    }
+
+    .theme-create {
+        padding-top: 30px;
+    }
+
+    .bm-cross-button {
+        height: 24px;
+        width: 24px;
+    }
+
+    .bm-menu {
+        font-size: 1.15em;
+        padding: 2.5em 1.5em 0;
+    }
+
+    .bm-item-list {
+        padding: .8em;
+    }
+
+    .bm-overlay {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-item {
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .bm-burger-button {
+            margin: 20px 30px;
+        }
+    }
+
+    @media (max-width: 670px) {
+        .bm-burger-button {
+            margin: 20px 10px;
+        }
+    }
+    </style>
+    <style type="text/css">
+    .react-autosuggest__suggestion,
+    .react-autosuggest__input {
+        background-color: #e0e0e0;
+        border: 0;
+        border-radius: 5px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        color: #616161;
+        display: block;
+        font-size: 2em;
+        margin: 0 auto;
+        max-width: 500px;
+        padding: 10px;
+        transition: box-shadow .218s, background-color .218s, color .218s;
+        width: 100%;
+    }
+
+    .react-autosuggest__suggestion:focus,
+    .react-autosuggest__input:focus {
+        background-color: #eee;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 5px 0 13px 0 rgba(0, 0, 0, 0.1), -5px 0 10px 0 rgba(0, 0, 0, 0.1);
+        color: #212121;
+        outline: none;
+    }
+
+    .searchbar-container {
+        padding: 10px 5px;
+        position: absolute;
+        top: 30%;
+        width: 100%;
+    }
+
+    .searchbar-container .helpText {
+        line-height: 1.8rem;
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .searchbar-container::before {
+        color: #e0e0e0;
+        content: 'I want to learn';
+        display: block;
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .react-autosuggest__suggestions-container {
+        margin: -5px auto;
+        max-height: 210px;
+        max-width: 500px;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .react-autosuggest__suggestions-container::before {
+        border-radius: 0 0 5px 5px;
+        bottom: 0;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 5px 0 13px 0 rgba(0, 0, 0, 0.1), -5px 0 10px 0 rgba(0, 0, 0, 0.1);
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .searchbar-container--exploring {
+        position: initial;
+    }
+
+    .searchbar-container--exploring::before {
+        display: none;
+    }
+
+    .searchbar-container--exploring .react-autosuggest__suggestions-container {
+        left: 50%;
+        position: absolute;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        width: 100%;
+    }
+
+    .searchbar-container--exploring .helpText {
+        display: none;
+    }
+
+    @media (max-width: 610px) {
+        .searchbar-container--exploring .react-autosuggest__input {
+            margin: 0;
+            width: calc(100% - 50px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .searchbar-container--exploring {
+            z-index: 1;
+        }
+    }
+
+    .react-autosuggest__suggestion {
+        background-color: #eee;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .react-autosuggest__suggestion:first-child {
+        padding-top: 15px;
+    }
+
+    .react-autosuggest__suggestion:last-child {
+        border-radius: 0 0 5px 5px;
+    }
+
+    .react-autosuggest__suggestion div {
+        color: #616161;
+    }
+
+    .react-autosuggest__suggestion--highlighted {
+        background-color: #bdbdbd;
+    }
+
+    .react-autosuggest__suggestion--highlighted div {
+        color: #212121;
+    }
+
+    .react-autosuggest__suggestions-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            font-size: 12px;
+        }
+    }
+    </style>
+    <style type="text/css">
+    .dialog-footer--reject,
+    .dialog-footer--accept {
+        background-color: #eee;
+        border-radius: 4px;
+        color: #212121;
+        display: inline-block;
+        font-weight: bold;
+        margin: 5px;
+        padding: 10px;
+        transition: background-color .218s;
+    }
+
+    .dialog-footer--reject:hover,
+    .dialog-footer--accept:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .dialog-container {
+        background-color: rgba(0, 0, 0, 0.2);
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        max-height: 100%;
+        overflow: scroll;
+        padding: 30px 20px;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 5;
+    }
+
+    .dialog-container input {
+        background-color: transparent;
+        border: 0;
+        bottom: -1px;
+        height: 1px;
+        position: absolute;
+        width: 1px;
+    }
+
+    .dialog-container input:focus {
+        outline: none;
+    }
+
+    .dialog-container--centered {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+
+    .dialog-container--invisible {
+        display: none;
+    }
+
+    .dialog {
+        background-color: #eee;
+        border-radius: 4px;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 5px 0 13px 0 rgba(0, 0, 0, 0.1), -5px 0 10px 0 rgba(0, 0, 0, 0.1);
+        color: #212121;
+        font-size: 1rem;
+        margin: 0 auto;
+        max-width: 700px;
+        min-width: 300px;
+        padding: 5px;
+    }
+
+    .dialog-title {
+        color: #212121;
+        font-size: 1.3rem;
+        font-weight: bold;
+        padding: 10px;
+    }
+
+    .dialog-body {
+        color: #616161;
+        padding: 5px 20px;
+    }
+
+    .dialog-footer {
+        text-align: right;
+    }
+    </style>
+    <style type="text/css">
+    .mindmap-svg {
+        height: 100vh;
+        width: 100%
+    }
+
+    .mindmap-svg:focus {
+        outline: none
+    }
+
+    .mindmap-node>a {
+        background: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        color: #212121;
+        display: inline-block;
+        font-family: Raleway;
+        font-size: 22px;
+        margin: 0 auto;
+        padding: 15px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .2s, color .2s ease-out
+    }
+
+    .mindmap-node>a[href]:hover {
+        background-color: #f57c00;
+        color: #fff;
+        cursor: pointer
+    }
+
+    .mindmap-node--editable {
+        cursor: all-scroll
+    }
+
+    .mindmap-node--editable>a {
+        pointer-events: none
+    }
+
+    .mindmap-subnode-group {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        border-left: 4px solid #9e9e9e;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin-left: 15px;
+        padding: 5px
+    }
+
+    .mindmap-subnode-group a {
+        color: #212121;
+        font-family: Raleway;
+        font-size: 16px;
+        padding: 2px 5px
+    }
+
+    .mindmap-connection {
+        fill: transparent;
+        stroke: #9e9e9e;
+        stroke-dasharray: 10px 4px;
+        stroke-width: 3px
+    }
+
+    .mindmap-emoji {
+        height: 24px;
+        vertical-align: bottom;
+        width: 24px
+    }
+
+    .reddit-emoji {
+        border-radius: 50%
+    }
+    </style>
+    <style type="text/css">
+    .breadcrumbs {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .breadcrumbs span:hover {
+        cursor: pointer;
+    }
+
+    .breadcrumbs span::after {
+        content: ' - ';
+    }
+
+    .breadcrumbs span:last-child {
+        font-weight: bold;
+    }
+
+    .breadcrumbs span:last-child::after {
+        content: '';
+    }
+    </style>
+    <style type="text/css">
+    .contribute-button {
+        background-color: #f57c00;
+        border: 0;
+        border-radius: 4px;
+        bottom: 10px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 6px 10px;
+        position: absolute;
+        right: 10px;
+        text-align: center;
+        transition: box-shadow .218s, background-color .218s;
+        white-space: nowrap;
+        z-index: 2;
+    }
+
+    .contribute-button:hover {
+        background: #ef6c00;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 5px 0 13px 0 rgba(0, 0, 0, 0.1), -5px 0 10px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    .contribute-button:focus {
+        outline: none;
+    }
+
+    @media (max-width: 630px) {
+        .contribute-button {
+            display: none;
+        }
+    }
+
+    .contribute-button-emoji {
+        height: 24px;
+    }
+
+    .contribute-button-text {
+        color: #f5f5f5;
+        margin-right: 5px;
+        vertical-align: 4px;
+    }
+    </style>
+    <style type="text/css">
+    .contribute-dialog b,
+    .contribute-dialog h3,
+    .contribute-dialog h4 {
+        color: #212121;
+        font-weight: bold;
+    }
+
+    .contribute-dialog li {
+        margin-bottom: 10px;
+    }
+
+    .contribute-dialog pre {
+        background-color: #424242;
+        color: #f5f5f5;
+        font-family: monospace;
+        overflow: scroll;
+        padding: 10px;
+    }
+
+    .contribute-dialog code {
+        background-color: #bdbdbd;
+        border-radius: 2px;
+        font-family: monospace;
+        padding: 2px 4px;
+    }
+    </style>
+    <style type="text/css">
+    * {
+        box-sizing: border-box;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            font-size: 12px;
+        }
+    }
+
+    footer {
+        bottom: 0;
+        padding: 10px;
+        position: absolute;
+        width: 100%;
+    }
+
+    footer a {
+        margin-right: 20px;
+        text-decoration: none;
+        z-index: -1;
+    }
+
+    footer a span {
+        font-weight: bold;
+        vertical-align: 4px;
+    }
+
+    .thank-you:hover svg {
+        fill: #ff3d00;
+    }
+
+    .thank-you:hover span {
+        color: #ff3d00;
+    }
+
+    .map:hover svg {
+        fill: #ff9100;
+    }
+
+    .map:hover span {
+        color: #ff9100;
+    }
+
+    .emoji-reference:hover {
+        cursor: default;
+    }
+
+    .emoji-reference:hover+.emoji-reference-container {
+        display: block;
+    }
+
+    .emoji-reference-container {
+        bottom: 50px;
+        display: none;
+        left: 3%;
+        position: absolute;
+    }
+
+    .emoji-reference-table {
+        border-radius: 10px;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 5px 0 13px 0 rgba(0, 0, 0, 0.1), -5px 0 10px 0 rgba(0, 0, 0, 0.1);
+        padding: 15px 10px;
+    }
+
+    .emoji-reference-icon {
+        height: 24px;
+        padding: 2px;
+        width: 24px;
+    }
+
+    .patreon-link {
+        color: #9c27b0;
+    }
+
+    .thank-you-text {
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .thank-you-text+span {
+        vertical-align: 6px;
+    }
+
+    .twitter:hover g {
+        fill: #1da1f3;
+    }
+
+    .twitter:hover span {
+        color: #1da1f3;
+    }
+
+    .emoji-reddit {
+        border-radius: 50%;
+    }
+
+    .mindmap-svg {
+        height: calc(100vh - 142px);
+    }
+
+    @media (max-width: 768px) {
+        .mindmap-svg {
+            height: calc(100vh - 134px);
+        }
+    }
+
+    .mindmap-node p:hover {
+        background-color: #9e9e9e;
+    }
+
+    .mindmap-node p,
+    .mindmap-node a {
+        color: #212121;
+        text-decoration: none;
+    }
+
+    @media (max-width: 630px) {
+        .twitter,
+        .thank-you,
+        .octocat>span {
+            display: none;
+        }
+    }
+
+    @-webkit-keyframes scaleout {
+        0% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    @keyframes scaleout {
+        0% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    .spinner {
+        -webkit-animation: scaleout 1s infinite ease-in-out;
+        animation: scaleout 1s infinite ease-in-out;
+        border-radius: 100%;
+        height: 40px;
+        margin: 100px auto;
+        width: 40px;
+    }
+    </style>
+    <style type="text/css">
+    .PearlWhite {
+        background-color: #eee;
+    }
+
+    .PearlWhite .searchbar-container::before {
+        color: #212121;
+    }
+
+    .PearlWhite .react-autosuggest__input:focus {
+        background-color: #fff;
+    }
+
+    .PearlWhite .helpText {
+        color: #212121;
+    }
+
+    .PearlWhite .breadcrumbs span {
+        color: #212121;
+    }
+
+    .PearlWhite .mindmap-connection {
+        stroke: #212121;
+    }
+
+    .PearlWhite .mindmap-subnode-group a {
+        color: #212121;
+    }
+
+    .PearlWhite .bm-burger-bars {
+        background: #212121;
+    }
+
+    .PearlWhite .bm-menu {
+        background: #212121;
+    }
+
+    .PearlWhite .bm-cross {
+        background-color: #eee;
+    }
+
+    .PearlWhite .sidebar-menu-item {
+        color: #eee;
+    }
+
+    .PearlWhite .sidebar-menu-options div,
+    .PearlWhite .sidebar-menu-options li {
+        border-color: #424242;
+        color: #e0e0e0;
+    }
+
+    .PearlWhite .sidebar-menu-options a {
+        color: #ff9100;
+    }
+
+    .PearlWhite .sidebar-menu-options div:not([disabled]):hover {
+        background-color: #424242;
+    }
+
+    .PearlWhite .thank-you-text {
+        color: #212121;
+    }
+
+    .PearlWhite footer a svg {
+        fill: #212121;
+    }
+
+    .PearlWhite footer a span {
+        color: #212121;
+    }
+
+    .PearlWhite .octocat:hover svg {
+        fill: #757575;
+    }
+
+    .PearlWhite .octocat:hover span {
+        color: #757575;
+    }
+
+    .PearlWhite .emoji-reference:hover svg {
+        fill: #757575;
+    }
+
+    .PearlWhite .emoji-reference:hover span {
+        color: #757575;
+    }
+
+    .PearlWhite .emoji-reference-table {
+        background-color: #212121;
+        color: #eee;
+    }
+
+    .PearlWhite .spinner {
+        background-color: #212121;
+    }
+    </style>
+    <style type="text/css">
+    .Night {
+        background-color: #212121;
+    }
+
+    .Night .searchbar-container::before {
+        color: #eee;
+    }
+
+    .Night .react-autosuggest__input:focus {
+        background-color: #fff;
+    }
+
+    .Night .helpText {
+        color: #eee;
+    }
+
+    .Night .breadcrumbs span {
+        color: #eee;
+    }
+
+    .Night .mindmap-connection {
+        stroke: #e0e0e0;
+    }
+
+    .Night .mindmap-subnode-group a {
+        color: #eee;
+    }
+
+    .Night .bm-burger-bars {
+        background: #eee;
+    }
+
+    .Night .bm-menu {
+        background: #bdbdbd;
+    }
+
+    .Night .bm-item-list {
+        color: #212121;
+    }
+
+    .Night .bm-cross {
+        background-color: #212121;
+    }
+
+    .Night .sidebar-menu-item {
+        color: #212121;
+    }
+
+    .Night .sidebar-menu-options div,
+    .Night .sidebar-menu-options li {
+        border-color: #9e9e9e;
+        color: #424242;
+    }
+
+    .Night .sidebar-menu-options div:not([disabled]):hover {
+        background-color: #9e9e9e;
+    }
+
+    .Night .thank-you-text {
+        color: #eee;
+    }
+
+    .Night footer a svg {
+        fill: #eee;
+    }
+
+    .Night footer a span {
+        color: #eee;
+    }
+
+    .Night .octocat:hover svg {
+        fill: #9e9e9e;
+    }
+
+    .Night .octocat:hover span {
+        color: #9e9e9e;
+    }
+
+    .Night .emoji-reference:hover svg {
+        fill: #9e9e9e;
+    }
+
+    .Night .emoji-reference:hover span {
+        color: #9e9e9e;
+    }
+
+    .Night .emoji-reference-table {
+        background-color: #eee;
+        color: #212121;
+    }
+
+    .Night .spinner {
+        background-color: #eee;
+    }
+    </style>
+</head>
+
+<body class="PearlWhite">
+    <div id="react-app">
+        <div data-reactroot="">
+            <div>
+                <div>
+                    <div class="breadcrumbs"><span id="mindmap_title">learn anything</span></div>
+                    <div>
+                    	<!--Qingwu MindMap-->
+                        <svg class="mindmap-svg" viewBox="-1461.6079036746407 -1270.9336170238978 2744.357208522021 1090.631909575368" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                            <g id="mindmap-subnodes"></g>
+                            <g id="mindmap_connections">
+                                <path class="mindmap-connection" d="M 94.6584016918082 -866.1504624628388 Q 22.541101691808194 -819.4467624628388 , -16.075381447783457 -772.7443618099246"></path>
+                                <path class="mindmap-connection" d="M -170.99125224088107 -905.6773511498378 Q -100.53335224088107 -839.2111511498379 , -16.075381447783457 -772.7443618099246"></path>
+                                <path class="mindmap-connection" d="M -293.8307602468842 -764.0052950698719 Q -148.70276024688422 -768.3752150698718 , -16.075381447783457 -772.7443618099246"></path>
+                                <path class="mindmap-connection" d="M 275.7366736409663 -754.9780090993289 Q 116.83067364096627 -763.8611790993289 , -16.075381447783457 -772.7443618099246"></path>
+                                <path class="mindmap-connection" d="M 94.6584016918082 -866.1504624628388 Q 181.44740169180818 -810.5642624628389 , 275.7366736409663 -754.9780090993289"></path>
+                                <path class="mindmap-connection" d="M 505.9275233175904 -545.133306790242 Q 402.8315233175904 -650.0553067902421 , 275.7366736409663 -754.9780090993289"></path>
+                                <path class="mindmap-connection" d="M 169.61640930175736 -552.217329582282 Q 318.77140930175733 -548.675289582282 , 505.9275233175904 -545.133306790242"></path>
+                                <path class="mindmap-connection" d="M 169.61640930175736 -552.217329582282 Q 280.44440930175733 -647.254529582282 , 275.7366736409663 -754.9780090993289"></path>
+                                <path class="mindmap-connection" d="M 835.5853838625203 -477.2308987642806 Q 693.7533838625203 -556.5099987642806 , 568.7558738235875 -659.6277490126347"></path>
+                                <path class="mindmap-connection" d="M 568.7558738235875 -659.6277490126347 Q 414.74587382358754 -707.3030490126347 , 275.7366736409663 -754.9780090993289"></path>
+                                <path class="mindmap-connection" d="M -530.3763361567949 -809.0384518783704 Q -410.6043361567949 -786.5220518783705 , -293.8307602468842 -764.0052950698719"></path>
+                                <path class="mindmap-connection" d="M 953.4168377091396 -807.5058975894895 Q 779.6678377091396 -790.3083975894895 , 608.9173134059233 -773.1114540454149"></path>
+                                <path class="mindmap-connection" d="M 985.2779509520342 -690.4677908180623 Q 813.8459509520342 -731.7895908180624 , 608.9173134059233 -773.1114540454149"></path>
+                                <path class="mindmap-connection" d="M -871.8275166739402 -620.9969255565542 Q -831.2417166739402 -726.0869255565542 , -734.8931233904002 -836.7148049953764"></path>
+                                <path class="mindmap-connection" d="M 114.6142839414888 -645.082358976381 Q 213.9240839414888 -700.030258976381 , 275.7366736409663 -754.9780090993289"></path>
+                                <path class="mindmap-connection" d="M 505.9275233175904 -545.133306790242 Q 515.1306533175904 -450.45560679024203 , 493.3338253054999 -355.77660147067706"></path>
+                                <path class="mindmap-connection" d="M 806.5856682431386 -899.8320169364456 Q 716.7513682431386 -836.4722169364456 , 608.9173134059233 -773.1114540454149"></path>
+                                <path class="mindmap-connection" d="M -1255.627631666629 -819.5651163225882 Q -1100.066631666629 -814.9331263225882 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M -437.2018422827259 -905.3956725534085 Q -228.76984228272593 -831.8383725534086 , -16.075381447783457 -772.7443618099246"></path>
+                                <path class="mindmap-connection" d="M -425.7256851533871 -1092.4049496270914 Q -427.1760151533871 -1004.3586496270914 , -437.2018422827259 -905.3956725534085"></path>
+                                <path class="mindmap-connection" d="M -1284.051528930664 -729.6961975097656 Q -1123.0275289306642 -769.9982975097656 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M -425.7256851533871 -1092.4049496270914 Q -331.11908515338706 -983.4649496270913 , -170.99125224088107 -905.6773511498378"></path>
+                                <path class="mindmap-connection" d="M -113.61797006995289 -679.1031457681573 Q -206.9766700699529 -721.5541457681574 , -293.8307602468842 -764.0052950698719"></path>
+                                <path class="mindmap-connection" d="M -113.61797006995289 -679.1031457681573 Q -61.84677006995289 -725.9234457681573 , -16.075381447783457 -772.7443618099246"></path>
+                                <path class="mindmap-connection" d="M -184.78524910243232 -1021.9899702494124 Q -179.59820910243232 -965.6414702494124 , -170.99125224088107 -905.6773511498378"></path>
+                                <path class="mindmap-connection" d="M 835.5853838625203 -477.2308987642806 Q 660.5063838625204 -511.18209876428057 , 505.9275233175904 -545.133306790242"></path>
+                                <path class="mindmap-connection" d="M 796.1570704637379 -389.90505893673526 Q 666.0420704637379 -467.51915893673527 , 505.9275233175904 -545.133306790242"></path>
+                                <path class="mindmap-connection" d="M 94.6584016918082 -866.1504624628388 Q 273.7334016918082 -869.4064724628388 , 456.80516320130255 -872.6623545958932"></path>
+                                <path class="mindmap-connection" d="M 267.99464781094593 -1003.6946150518099 Q 162.57664781094593 -934.9226150518099 , 94.6584016918082 -866.1504624628388"></path>
+                                <path class="mindmap-connection" d="M -666.246910635349 -700.7776344771934 Q -590.061610635349 -754.9080344771934 , -530.3763361567949 -809.0384518783704"></path>
+                                <path class="mindmap-connection" d="M -598.5126972029695 -582.5853671858795 Q -724.1696972029696 -601.7910671858795 , -871.8275166739402 -620.9969255565542"></path>
+                                <path class="mindmap-connection" d="M -598.5126972029695 -582.5853671858795 Q -562.9443972029695 -695.8123671858795 , -530.3763361567949 -809.0384518783704"></path>
+                                <path class="mindmap-connection" d="M -666.246910635349 -700.7776344771934 Q -698.0700106353489 -768.7463344771934 , -734.8931233904002 -836.7148049953764"></path>
+                                <path class="mindmap-connection" d="M -1186.6264880695178 -908.1245078027775 Q -1073.8164880695178 -859.2124078027775 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M -905.3300009334785 -478.72714449452064 Q -777.4030009334784 -482.87035449452065 , -612.4747201024961 -487.01357073488464"></path>
+                                <path class="mindmap-connection" d="M -1062.469498760932 -661.5670945159102 Q -989.7367987609321 -735.9337945159102 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M -671.2807999332395 -996.7211353673343 Q -567.7417999332395 -951.0584353673344 , -437.2018422827259 -905.3956725534085"></path>
+                                <path class="mindmap-connection" d="M -905.3300009334785 -478.72714449452064 Q -974.6553009334784 -624.5691444945206 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M -953.004150390625 -810.3004455566406 Q -907.915750390625 -715.6486455566406 , -871.8275166739402 -620.9969255565542"></path>
+                                <path class="mindmap-connection" d="M 608.9173134059233 -773.1114540454149 Q 440.0763134059233 -764.0447740454149 , 275.7366736409663 -754.9780090993289"></path>
+                                <path class="mindmap-connection" d="M 953.4168377091396 -807.5058975894895 Q 960.0973877091396 -748.9867975894895 , 985.2779509520342 -690.4677908180623"></path>
+                                <path class="mindmap-connection" d="M 892.1895527475413 -586.5274319575095 Q 734.7235527475412 -623.0776319575095 , 568.7558738235875 -659.6277490126347"></path>
+                                <path class="mindmap-connection" d="M -57.05449423325831 -530.5397573825533 Q -35.60089423325831 -476.7398573825533 , 8.85257335257711 -422.94003579468836"></path>
+                                <path class="mindmap-connection" d="M -57.05449423325831 -530.5397573825533 Q -85.33609423325831 -604.8214573825533 , -113.61797006995289 -679.1031457681573"></path>
+                                <path class="mindmap-connection" d="M -1092.7589646060924 -574.6789078163888 Q -996.8625646060924 -659.2371078163887 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M -396.392433639121 -603.6720488556718 Q -378.111633639121 -683.8385488556719 , -293.8307602468842 -764.0052950698719"></path>
+                                <path class="mindmap-connection" d="M -322.4994712762066 -454.90020549402834 Q -197.89647127620657 -564.3822054940283 , -113.61797006995289 -679.1031457681573"></path>
+                                <path class="mindmap-connection" d="M -322.4994712762066 -454.90020549402834 Q -186.27747127620657 -492.71990549402835 , -57.05449423325831 -530.5397573825533"></path>
+                                <path class="mindmap-connection" d="M 9.71485833362135 -998.9236348920165 Q 68.43655833362135 -932.5369348920165 , 94.6584016918082 -866.1504624628388"></path>
+                                <path class="mindmap-connection" d="M 267.99464781094593 -1003.6946150518099 Q 435.84764781094594 -993.6092150518099 , 687.1992799201898 -983.5239241608474"></path>
+                                <path class="mindmap-connection" d="M 953.4168377091396 -807.5058975894895 Q 1008.5830377091396 -864.7642975894895 , 1132.7493048473807 -922.0224822727978"></path>
+                                <path class="mindmap-connection" d="M 226.12958850691757 -441.80956207545455 Q 367.02958850691755 -493.47146207545455 , 505.9275233175904 -545.133306790242"></path>
+                                <path class="mindmap-connection" d="M 226.12958850691757 -441.80956207545455 Q 374.9825885069176 -398.7931620754546 , 493.3338253054999 -355.77660147067706"></path>
+                                <path class="mindmap-connection" d="M -396.392433639121 -603.6720488556718 Q -506.792433639121 -499.0100488556718 , -502.8405079799418 -379.5102846938953"></path>
+                                <path class="mindmap-connection" d="M -502.8405079799418 -379.5102846938953 Q -349.6035079799418 -357.8507846938953 , -200.8650434882236 -336.1912678406301"></path>
+                                <path class="mindmap-connection" d="M 687.1992799201898 -983.5239241608474 Q 843.3402799201898 -992.4994041608473 , 973.9816986827127 -1001.4748844383039"></path>
+                                <path class="mindmap-connection" d="M -905.3300009334785 -478.72714449452064 Q -954.0419009334785 -468.2614444945206 , -1054.824694608165 -393.8946077464959"></path>
+                                <path class="mindmap-connection" d="M -882.6302185058594 -922.6456451416016 Q -923.0672185058594 -866.4729451416016 , -953.004150390625 -810.3004455566406"></path>
+                                <path class="mindmap-connection" d="M 9.71485833362135 -998.9236348920165 Q 128.00385833362134 -1072.4189348920165 , 282.3275790901821 -1120.9336170238978"></path>
+                                <path class="mindmap-connection" d="M 973.9816986827127 -1001.4748844383039 Q 663.2046986827127 -1078.547984438304 , 282.3275790901821 -1120.9336170238978"></path>
+                                <path class="mindmap-connection" d="M -904.8502837324556 -1029.202995907944 Q -1038.2732837324556 -989.8741959079439 , -1186.6264880695178 -908.1245078027775"></path>
+                                <path class="mindmap-connection" d="M -1236.8859531376186 -467.7066639773749 Q -1173.8151531376186 -521.8005639773748 , -1092.7589646060924 -574.6789078163888"></path>
+                                <path class="mindmap-connection" d="M 226.12958850691757 -441.80956207545455 Q 145.26748850691757 -386.05556207545453 , 66.90548799861654 -330.3017074485298"></path>
+                                <path class="mindmap-connection" d="M -502.8405079799418 -379.5102846938953 Q -622.6225079799418 -356.7791846938953 , -743.9046477982122 -335.5481347236823"></path>
+                                <path class="mindmap-connection" d="M -1062.469498760932 -661.5670945159102 Q -1179.038498760932 -637.6160945159102 , -1311.6079036746407 -613.6650373070642"></path>
+                            </g>
+                            <g id="mindmap_nodes">
+                                <foreignobject class="mindmap-node" width="256" height="59" x="156.3275790901821" y="-1150.4336170238978"><a id="node-undefined" href="https://learn-anything.xyz/information-theory">information theory  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="225" height="59" x="-536.2256851533871" y="-1121.9049496270914"><a id="node-undefined" href="https://learn-anything.xyz/cryptocurrency">cryptocurrency  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is a digital asset designed to work as a medium of exchange using cryptography to secure the transactions and to control the creation of additional units of the currency</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="179" height="59" x="-992.3502837324556" y="-1058.702995907944"><a id="node-undefined" href="https://learn-anything.xyz/agriculture">agriculture  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="150" height="59" x="-257.7852491024323" y="-1051.4899702494124"><a id="node-undefined" href="https://learn-anything.xyz/security">security  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the degree of resistance to, or protection from harm</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="227" height="59" x="862.4816986827127" y="-1030.974884438304"><a id="node-undefined" href="https://learn-anything.xyz/communication">communication  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="198" height="59" x="-87.28514166637865" y="-1028.4236348920165"><a id="node-undefined" href="https://learn-anything.xyz/data-science">data science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>studies scientific methods, processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="245" height="59" x="-791.7807999332395" y="-1026.2211353673342"><a id="node-undefined" href="https://learn-anything.xyz/entrepreneurship">entrepreneurship  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the process of designing, launching and running a new business, which typically begins as a small business, such as a startup company, offering a product, process or service for sale or hire</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="358" height="59" x="90.99464781094593" y="-1033.19461505181"><a id="node-undefined" href="https://learn-anything.xyz/natural-language-processing">natural language processing  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>studies the interactions between computers and human (natural) languages</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="169" height="59" x="604.6992799201898" y="-1013.0239241608474"><a id="node-undefined" href="https://learn-anything.xyz/linguistics">linguistics  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>study of language and its structure including study of grammar, syntax and phonetics</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="246" height="59" x="-1003.6302185058594" y="-952.1456451416016"><a id="node-undefined" href="https://learn-anything.xyz/cognitive-science">cognitive science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="139" height="59" x="1065.2493048473807" y="-951.5224822727978"><a id="node-undefined" href="https://learn-anything.xyz/games">games  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>are structured forms of play, usually undertaken for enjoyment and sometimes used as an educational tool</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="205" height="59" x="-1287.1264880695178" y="-937.6245078027775"><a id="node-undefined" href="https://learn-anything.xyz/anthropology">anthropology  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study of various aspects of humans within past and present societies</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="206" height="59" x="-271.99125224088107" y="-935.1773511498378"><a id="node-undefined" href="https://learn-anything.xyz/cryptography">cryptography  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>practice and study of hiding information, is used to try and keep information secret and safe linear algebra</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="181" height="59" x="-525.7018422827259" y="-934.8956725534085"><a id="node-undefined" href="https://learn-anything.xyz/economics">economics  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is concerned with description and analysis of the production, distribution, and consumption of goods and services</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="232" height="59" x="692.5856682431386" y="-929.3320169364456"><a id="node-undefined" href="https://learn-anything.xyz/computer-vision">computer vision  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>deals with how computers can be made for gaining high-level understanding from digital images or videos it seeks to automate tasks that the human visual system can do</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="271" height="59" x="323.30516320130255" y="-902.1623545958932"><a id="node-undefined" href="https://learn-anything.xyz/artificial-intelligence">artificial intelligence  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study of ‘intelligent agents’ (any device that perceives its environment and takes actions that maximise its chance of success at some goal)</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="245" height="59" x="-25.841598308191806" y="-895.6504624628388"><a id="node-undefined" href="https://learn-anything.xyz/machine-learning">machine learning  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>gives computer the ability to learn without being explicitly programmed linear algebra statistics</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="145" height="59" x="-805.3931233904002" y="-866.2148049953764"><a id="node-undefined" href="https://learn-anything.xyz/biology">biology  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is concerned with the study of life and living organisms, including their structure, function, growth, evolution, distribution, identification and taxonomy</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="172" height="59" x="-1339.627631666629" y="-849.0651163225882"><a id="node-undefined" href="https://learn-anything.xyz/marketing">marketing  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study and management of exchange relationships</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="187" height="59" x="-1044.504150390625" y="-839.8004455566406"><a id="node-undefined" href="https://learn-anything.xyz/psychology">psychology  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the science of behavior and mind, embracing all aspects of conscious and unconscious experience as well as thought</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="169" height="59" x="-612.8763361567949" y="-838.5384518783704"><a id="node-undefined" href="https://learn-anything.xyz/chemistry">chemistry  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is a branch of physical science that studies the composition, structure, properties and change of matter it includes topics such as the properties of individual atoms, how atoms form chemical bonds to create chemical compounds, the interactions of substances through intermolecular forces that give matter its general properties, and the interactions between substances through chemical reactions to form different substances</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="270" height="59" x="820.4168377091396" y="-837.0058975894895"><a id="node-undefined" href="https://learn-anything.xyz/game-development">game development  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the process of creating a video game first video games were developed in the 1960s, but required mainframe computers and were not available to the general public</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="261" height="59" x="480.4173134059233" y="-802.6114540454149"><a id="node-undefined" href="https://learn-anything.xyz/computer-graphics">computer graphics  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>are pictures and films created using computers it refers to computer-generated image data created with help from specialised graphical hardware and software linear algebra</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="201" height="59" x="-114.57538144778346" y="-802.2443618099246"><a id="node-undefined" href="https://learn-anything.xyz/mathematics">mathematics  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>study of numbers, shapes and patterns to a mathematician, the reason something is true is just as important as the fact that it is true it includes the study of : numbers (i.e. 3 + 6 = 9) change (how things become different over time) it uses logic, paper and calculator a proof gives a reason why a rule in mathematics is correct sometimes, math finds and studies rules or ideas in the real world that we don’t understand yet studying the rules and ideas of mathematics can help us understand the world better</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="145" height="59" x="-364.3307602468842" y="-793.5052950698719"><a id="node-undefined" href="https://learn-anything.xyz/physics">physics  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is involved with the study of matter and its motion and behaviour through space and time, lagoon with related concepts such as energy and force its fundamental goal is to understand how the universe behaves mathematics</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="253" height="59" x="151.23667364096627" y="-784.4780090993289"><a id="node-undefined" href="https://learn-anything.xyz/computer-science">computer science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study of the theory, experimentation and engineering that form the basis for the design and use of computers it is the study of automating algorithmic processes that scale</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="206" height="59" x="-1385.051528930664" y="-759.1961975097656"><a id="node-undefined" href="https://learn-anything.xyz/management">management  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the administration of an organisation, whether it be a business, a not-for-profit organisation, or government body</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="133" height="59" x="-730.746910635349" y="-730.2776344771934"><a id="node-undefined" href="https://learn-anything.xyz/health">health  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the level of functional and metabolic efficiency of a living organism</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="199" height="59" x="887.7779509520342" y="-719.9677908180623"><a id="node-undefined" href="https://learn-anything.xyz/virtual-reality">virtual reality  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>typically refers to computer technologies that use virtual reality headsets to generate the realistic images, sounds and other sensations that replicate a real environment or create an imaginary setting</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="191" height="59" x="-207.1179700699529" y="-708.6031457681573"><a id="node-undefined" href="https://learn-anything.xyz/engineering">engineering  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the application of mathematics and scientific, economic, social, and practical knowledge in order to invent, innovate, design, build, maintain, research, and improve structures, machines, tools, systems, components, materials, processes, solutions, and organizations</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="105" height="59" x="-1112.969498760932" y="-691.0670945159102"><a id="node-undefined" href="https://learn-anything.xyz/law">law  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is a system of rules that are created and enforced through social or governmental institutions to regulate behavior</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="236" height="59" x="452.75587382358754" y="-689.1277490126347"><a id="node-undefined" href="https://learn-anything.xyz/network-science">network science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is an academic field which studies complex networks such as telecommunication networks, computer networks, biological networks, cognitive and semantic networks, and social networks, considering distinct elements or actors represented by nodes (or vertices) and the connections between the elements or actors as links (or edges)</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="174" height="59" x="29.614283941488793" y="-674.582358976381"><a id="node-undefined" href="https://learn-anything.xyz/databases">databases  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>are organised collections of data they are a collection of schemas, tables, queries, reports, views, and other objects</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="207" height="59" x="-973.3275166739402" y="-650.4969255565542"><a id="node-undefined" href="https://learn-anything.xyz/neuroscience">neuroscience  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the scientific study of the nervous system deals with the anatomy, biochemistry, molecular biology, and physiology of neurons and neural circuits</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="137" height="59" x="-1378.1079036746407" y="-643.1650373070642"><a id="node-undefined" href="https://learn-anything.xyz/history">history  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study of the past as it is described in written documents it is best we learn from the mistakes done already so to not repeat them again</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="299" height="59" x="-543.892433639121" y="-633.1720488556718"><a id="node-undefined" href="https://learn-anything.xyz/environmental-science">environmental science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study of the environment and the solutions of environmental problems</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="295" height="59" x="746.6895527475413" y="-616.0274319575095"><a id="node-undefined" href="https://learn-anything.xyz/distributed-computing">distributed computing  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>a distributed system is a model in which components located on networked computers communicate and coordinate their actions by passing messages the components interact with each other in order to achieve a common goal</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="163" height="59" x="-678.0126972029695" y="-612.0853671858795"><a id="node-undefined" href="https://learn-anything.xyz/medicine">medicine  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the science and practice of the diagnosis, treatment, and prevention of disease</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="167" height="59" x="-1174.2589646060924" y="-604.1789078163888"><a id="node-undefined" href="https://learn-anything.xyz/sociology">sociology  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>study of social behaviour or society, including its origins, development, organisation, networks and institutions</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="256" height="59" x="43.61640930175736" y="-581.717329582282"><a id="node-undefined" href="https://learn-anything.xyz/operating-systems">operating systems  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>programming computer science</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="207" height="59" x="404.4275233175904" y="-574.633306790242"><a id="node-undefined" href="https://learn-anything.xyz/programming">programming  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is a process that leads from an original formulation of a computing problem to executable computer programs computer science</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="192" height="59" x="-151.0544942332583" y="-560.0397573825533"><a id="node-undefined" href="https://learn-anything.xyz/architecture">architecture  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is both the process and the product of planning, designing, and constructing buildings and other physical structures</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="97" height="59" x="-658.9747201024961" y="-516.5135707348846"><a id="node-undefined" href="https://learn-anything.xyz/art">art  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is a diverse range of human activities in creating visual, auditory or performing artifacts (artworks), expressing the author's imaginative or technical skill, intended to be appreciated for their beauty or emotional power</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="181" height="59" x="-993.8300009334785" y="-508.22714449452064"><a id="node-undefined" href="https://learn-anything.xyz/philosophy">philosophy  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the study of general and fundamental problems concerning matters such as existence, knowledge, values, reason, mind, and language</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="255" height="59" x="710.0853838625203" y="-506.7308987642806"><a id="node-undefined" href="https://learn-anything.xyz/web-development">web development  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is a broad term for the work involved in developing a web site for the Internet (World Wide Web) or an intranet (a private network) it can range from developing the simplest static single page of plain text to the most complex web-based internet applications, electronic businesses, and social network services</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="174" height="59" x="-1321.8859531376186" y="-497.2066639773749"><a id="node-undefined" href="https://learn-anything.xyz/journalism">journalism  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="206" height="59" x="-423.4994712762066" y="-484.40020549402834"><a id="node-undefined" href="https://learn-anything.xyz/infrastructure">infrastructure  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>refers to the fundamental facilities and systems serving a country, city or area, including the services and facilities necessary for its economy to function</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="230" height="59" x="113.12958850691757" y="-471.30956207545455"><a id="node-undefined" href="https://learn-anything.xyz/control-systems">control systems  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="137" height="59" x="-57.64742664742289" y="-452.44003579468836"><a id="node-undefined" href="https://learn-anything.xyz/design">design  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the creation of a plan or convention for the construction of an object, system or measurable human interaction design is not just what it looks like and feels like design is how it works</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="100" height="59" x="-1102.824694608165" y="-423.3946077464959"><a id="node-undefined" href="https://learn-anything.xyz/life">life  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="158" height="59" x="719.1570704637379" y="-419.40505893673526"><a id="node-undefined" href="https://learn-anything.xyz/software">software  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="123" height="59" x="-970.6436940242266" y="-410.6363814952392"><a id="node-undefined" href="https://learn-anything.xyz/more">more  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="206" height="59" x="-603.8405079799418" y="-409.0102846938953"><a id="node-undefined" href="https://learn-anything.xyz/earth-science">earth science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="271" height="59" x="359.8338253054999" y="-385.27660147067706"><a id="node-undefined" href="https://learn-anything.xyz/computer-hardware">computer hardware  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title>is the collection of physical components that constitute a computer system</title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="215" height="59" x="-306.3650434882236" y="-365.6912678406301"><a id="node-undefined" href="https://learn-anything.xyz/space-science">space science  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="180" height="59" x="-831.9046477982122" y="-365.0481347236823"><a id="node-undefined" href="https://learn-anything.xyz/geography">geography  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-node" width="225" height="59" x="-43.594512001383464" y="-359.8017074485298"><a id="node-undefined" href="https://learn-anything.xyz/systems-theory">systems theory  ️ <img class="mindmap-emoji" title="mindmap" src="./imgs/1f5fa.png"></a>
+                                    <title></title>
+                                </foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="408.3275790901821" y="-1120.9336170238978"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-315.2256851533871" y="-1092.4049496270914"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-817.3502837324556" y="-1029.202995907944"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-111.78524910243232" y="-1021.9899702494124"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="1085.4816986827127" y="-1001.4748844383039"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="106.71485833362135" y="-998.9236348920165"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-550.7807999332395" y="-996.7211353673343"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="444.99464781094593" y="-1003.6946150518099"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="769.6992799201898" y="-983.5239241608474"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-761.6302185058594" y="-922.6456451416016"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="1200.2493048473807" y="-922.0224822727978"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1086.1264880695178" y="-908.1245078027775"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-69.99125224088107" y="-905.6773511498378"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-348.7018422827259" y="-905.3956725534085"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="920.5856682431386" y="-899.8320169364456"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="590.3051632013025" y="-872.6623545958932"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="215.1584016918082" y="-866.1504624628388"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-664.3931233904002" y="-836.7148049953764"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1171.627631666629" y="-819.5651163225882"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-861.504150390625" y="-810.3004455566406"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-447.8763361567949" y="-809.0384518783704"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="1086.4168377091396" y="-807.5058975894895"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="737.4173134059233" y="-773.1114540454149"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="82.42461855221654" y="-772.7443618099246"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-223.3307602468842" y="-764.0052950698719"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="400.2366736409663" y="-754.9780090993289"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1183.051528930664" y="-729.6961975097656"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-601.746910635349" y="-700.7776344771934"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="1082.7779509520342" y="-690.4677908180623"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-20.11797006995289" y="-679.1031457681573"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1011.9694987609321" y="-661.5670945159102"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="684.7558738235875" y="-659.6277490126347"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="199.6142839414888" y="-645.082358976381"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-770.3275166739402" y="-620.9969255565542"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1245.1079036746407" y="-613.6650373070642"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-248.892433639121" y="-603.6720488556718"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="1037.6895527475413" y="-586.5274319575095"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-519.0126972029695" y="-582.5853671858795"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1011.2589646060924" y="-574.6789078163888"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="295.61640930175736" y="-552.217329582282"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="607.4275233175904" y="-545.133306790242"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="36.94550576674169" y="-530.5397573825533"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-565.9747201024961" y="-487.01357073488464"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-816.8300009334785" y="-478.72714449452064"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="961.0853838625203" y="-477.2308987642806"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1151.8859531376186" y="-467.7066639773749"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-221.49947127620658" y="-454.90020549402834"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="339.12958850691757" y="-441.80956207545455"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="75.35257335257711" y="-422.94003579468836"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-1006.8246946081649" y="-393.8946077464959"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="873.1570704637379" y="-389.90505893673526"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-851.6436940242266" y="-381.1363814952392"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-401.8405079799418" y="-379.5102846938953"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="626.8338253054999" y="-355.77660147067706"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-95.36504348822359" y="-336.1912678406301"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="-655.9046477982122" y="-335.5481347236823"></foreignobject>
+                                <foreignobject class="mindmap-subnodes" width="4" height="0" x="177.40548799861654" y="-330.3017074485298"></foreignobject>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<footer style="padding-bottom: 10px">
+    <a class="map" id="btn_home" href="http://127.0.0.1:8000/learn-anything">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"></path>
+        </svg>
+        <span>Home</span> </a>
+    <a class="octocat" href="https://njuhalley.github.io/">
+        <svg height="24" width="24" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        <span>QingwuBlog</span> </a>
+    <a class="thank-you" href="http://127.0.0.1:8000/thank-you">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" height="24" viewBox="0 0 32 29.6" width="24">
+            <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"></path>
+        </svg>
+        <span>Thank you</span> </a>
+</footer>
+    <script src="./js/jquery.min.js"></script>
+    <!-- React -->
+    <script src="./js/react.min.js"></script>
+    <script src="./js/react-dom.min.js"></script>
+    <script src="./js/autosuggest.js"></script>
+    <!-- Redux -->
+    <script src="./js/redux.min.js"></script>
+    <script src="./js/react-redux.min.js"></script>
+    <script src="./js/redux-thunk.min.js"></script>
+    <!-- <script src="https://cdn.auth0.com/js/lock/10.18.0/lock.min.js"></script> -->
+    <!-- App -->
+    <script src="./js/en.bundle.js"></script>
+</body>
+<div></div>
+
+</html>
